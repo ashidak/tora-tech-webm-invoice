@@ -1,4 +1,4 @@
-package invoice.invoice_api;
+package invoice.invoice_api.model.response.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

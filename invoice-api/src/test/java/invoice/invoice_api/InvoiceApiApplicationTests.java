@@ -1,4 +1,4 @@
-package invoice.invoiceapi;
+package invoice.invoice_api;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

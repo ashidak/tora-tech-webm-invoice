@@ -1,4 +1,4 @@
-package invoice.invoice_api;
+package invoice.invoice_api.config;
 
 import java.util.List;
 
@@ -11,6 +11,9 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 
+/**
+ * The Class InvoiceApiConfing.
+ */
 @Configuration
 public class InvoiceApiConfing {
     /**
@@ -29,6 +32,11 @@ public class InvoiceApiConfing {
         return new MappingJackson2HttpMessageConverter(objectMapper);
     }
 
+    /**
+     * Extend message converters.
+     *
+     * @param converters the converters
+     */
     public void extendMessageConverters(
             final List<HttpMessageConverter<?>> converters) {
         converters.add(0, mappingJackson2HttpMessageConverter());

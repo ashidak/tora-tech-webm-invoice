@@ -1,5 +1,4 @@
-package invoice.invoice_api;
-
+package invoice.invoice_api.model.response.entity;
 import java.util.ArrayList;
 import java.util.List;
 

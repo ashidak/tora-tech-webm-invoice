@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script type="text/javascript" src="Invoice.js"></script>
+    <title>請求書API-ホーム</title>
+</head>
+<body>
+    <h1>請求書一覧</h1>
+    <p>
+        <input type="text" id="invoice" size="8" maxlength="6">
+        <button id="invoiceSearchBtn">検索</button>
+        <button id="invoiceAppendBtn">登録</button>
+    </p>
+    <table id="invoice_view" border="1">
+        <thead>
+            <tr>
+                <th>請求書管理番号</th>
+                <th>請求状態</th>
+                <th>請求金額</th>
+                <th>請求期間開始日</th>
+                <th>請求期間終了日</th>
+                <th>請求書作成日</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</body>
+</html>

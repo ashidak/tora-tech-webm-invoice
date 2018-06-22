@@ -1,5 +1,6 @@
 package invoice.invoice_api.config;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.context.annotation.Bean;
@@ -8,6 +9,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 
@@ -16,6 +18,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
  */
 @Configuration
 public class InvoiceApiConfing {
+
     /**
      * Mapping jackson 2 http message converter.
      * RestControllerで返却するJSONフォーマットを設定.
@@ -26,9 +29,12 @@ public class InvoiceApiConfing {
     public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
         ObjectMapper objectMapper = Jackson2ObjectMapperBuilder //
                 .json()
+                .dateFormat(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss"))
+                .serializationInclusion(JsonInclude.Include.NON_NULL)
                 .indentOutput(true)
                 .propertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)
                 .build();
+
         return new MappingJackson2HttpMessageConverter(objectMapper);
     }
 

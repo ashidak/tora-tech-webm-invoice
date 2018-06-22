@@ -1,5 +1,6 @@
 package invoice.invoice_api.model.response.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +18,12 @@ import invoice.invoice_api.model.response.entity.InvoiceResult;
  * The Class SearchInvoice.
  */
 @Service
+@Transactional(readOnly=true)
 public class SearchInvoice {
 
-    /** The jdbc template. */
+    /** The search jdbc template. */
     @Autowired
-    NamedParameterJdbcTemplate jdbcTemplate;
+    NamedParameterJdbcTemplate searchJdbcTemplate;
 
     /** The Constant SearchSql. */
     final static String SearchSql = "SELECT" +
@@ -47,17 +49,13 @@ public class SearchInvoice {
             "    invoice as i" +
             "    JOIN" +
             "        client as c" +
-            "    ON  i.client_no = c.client_no" +
-            "    JOIN" +
-            "        ord as o" +
-            "    ON  c.client_no = o.client_no";
+            "    ON  i.client_no = c.client_no";
 
     /**
      * Search all invoice.
      *
      * @return the list
      */
-    @Transactional
     public List<InvoiceResult> searchAllInvoice() {
         SqlParameterSource param = new MapSqlParameterSource();
         return inquiryDataBase(SearchSql, param);
@@ -69,7 +67,6 @@ public class SearchInvoice {
      * @param requestInvoiceNo the request invoice no
      * @return the list
      */
-    @Transactional
     public List<InvoiceResult> searchInvoice(final String requestInvoiceNo) {
 
         StringBuffer sqlBuf = new StringBuffer();
@@ -77,13 +74,34 @@ public class SearchInvoice {
         final String WhereSql = "    WHERE" +
                 "    i.invoice_no = :invoiceNo";
 
-        SqlParameterSource param = new MapSqlParameterSource()
-                .addValue("invoiceNo", requestInvoiceNo);
-
         sqlBuf.append(SearchSql);
         sqlBuf.append(WhereSql);
 
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("invoiceNo", requestInvoiceNo);
+
         return inquiryDataBase(sqlBuf.toString(), param);
+    }
+
+    /**
+     * Search last register invoice.
+     *
+     * @return the list
+     */
+    public List<InvoiceResult> searchLastRegisterInvoice() {
+
+        List<InvoiceResult> responceDataList = new ArrayList<InvoiceResult>();
+        SqlParameterSource param = new MapSqlParameterSource();
+
+        Integer registerInvoiceNo = searchJdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", param, Integer.class);
+        System.out.println(registerInvoiceNo);
+
+        InvoiceResult invoiceResult = new InvoiceResult();
+        invoiceResult.setInvoiceNo(registerInvoiceNo.toString());
+
+        responceDataList.add(invoiceResult);
+
+        return responceDataList;
     }
 
     /**
@@ -93,10 +111,11 @@ public class SearchInvoice {
      * @param param the param
      * @return the list
      */
-    private List<InvoiceResult> inquiryDataBase(String sql, SqlParameterSource param ) {
+    private List<InvoiceResult> inquiryDataBase(String sql, SqlParameterSource param) {
 
         RowMapper<InvoiceResult> mapper = new BeanPropertyRowMapper<InvoiceResult>(InvoiceResult.class);
-        List<InvoiceResult> responceDataList = jdbcTemplate.query(sql, param, mapper);
+        List<InvoiceResult> responceDataList = searchJdbcTemplate.query(sql, param, mapper);
+
         return responceDataList;
     }
 }

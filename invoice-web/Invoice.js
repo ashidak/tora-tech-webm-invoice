@@ -21,12 +21,41 @@ $(function() {
             });
         })
         .error(function(jqXHR, textStatus, errorThrown) {
-            console.log("エラー：" + textStatus);
-            console.log("テキスト：" + jqXHR.responseText);
+                const responseData = $.parseJSON(jqXHR.responseText);
+                var errorMessage = '';
+                
+                $.each(responseData.errors, function(index, value) {
+                    errorMessage = errorMessage + value.error_code + ":" + value.error_message + "\r\n";
+                });
+                alert(errorMessage);
         })
 
     $('#invoiceAppendBtn').on('click', function() {
-        alert("登録ゥ！！");
+        $.ajax({
+            type:"post",
+            url:requestUrl,
+            data:JSON.stringify({
+                "client_no" : $('#registration_form [name=clientNo]').val(),
+                "invoice_start_date" : $('#registration_form [name=invoiceStartDate]').val(),
+                "invoice_end_date" : $('#registration_form [name=invoiceEndDate]').val(),
+                "create_user" : $('#registration_form [name=createUser]').val()
+            }),
+            contentType:'application/json; charset=UTF-8',
+            dataType:"json",
+            success:function(json){
+                alert("請求書管理番号" + json.results[0].invoice_no + "を登録しました。");
+                location.reload();
+            },
+            error:function(jqXHR, textStatus, errorThrown){
+                const responseData = $.parseJSON(jqXHR.responseText);
+                var errorMessage = '';
+                
+                $.each(responseData.errors, function(index, value) {
+                    errorMessage = errorMessage + value.error_code + ":" + value.error_message + "\r\n";
+                });
+                alert(errorMessage);
+            }
+        });
     });
     $('#invoiceSearchBtn').on('click', function() {
         
@@ -35,7 +64,7 @@ $(function() {
         $("#invoice_view > tbody").empty();
         
         $.getJSON(
-            requestUrl+requestNo,
+            requestUrl+"/"+requestNo,
             null)
            .success(function(data, status) {
                 $.each(data.results, function(index, value) {
@@ -51,8 +80,13 @@ $(function() {
                 });
             })
             .error(function(jqXHR, textStatus, errorThrown) {
-                console.log("エラー：" + textStatus);
-                console.log("テキスト：" + jqXHR.responseText);
+                const responseData = $.parseJSON(jqXHR.responseText);
+                var errorMessage = '';
+                
+                $.each(responseData.errors, function(index, value) {
+                    errorMessage = errorMessage + value.error_code + ":" + value.error_message + "\r\n";
+                });
+                alert(errorMessage);
             })
     });
 });

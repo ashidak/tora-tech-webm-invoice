@@ -11,7 +11,6 @@
     <p>
         <input type="text" id="invoice" size="8" maxlength="6">
         <button id="invoiceSearchBtn">検索</button>
-        <button id="invoiceAppendBtn">登録</button>
     </p>
     <table id="invoice_view" border="1">
         <thead>
@@ -27,5 +26,29 @@
         <tbody>
         </tbody>
     </table>
+    <p>
+    <form id="registration_form">
+        <div>
+            <label for="clientNo">顧客管理番号　　:</label>
+            <input type="text" name="clientNo" />
+        </div>
+        <div>
+            <label for="invoiceStartDate">請求期間開始日　:</label>
+            <input type="text" name="invoiceStartDate" />
+        </div>
+        <div>
+            <label for="invoiceEndDate">請求期間終了日　:</label>
+            <input type="text" name="invoiceEndDate" />
+        </div>
+        <div>
+            <label for="createUser">登録ユーザ名　　:</label>
+            <input type="text" name="createUser" />
+        </div>
+        <div>
+            <button id="invoiceAppendBtn" type="button">登録</button>
+        </div>
+    </form>
+    </p>
+
 </body>
 </html>

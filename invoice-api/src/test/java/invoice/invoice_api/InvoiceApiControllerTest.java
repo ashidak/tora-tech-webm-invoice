@@ -82,8 +82,8 @@ public class InvoiceApiControllerTest {
         error.setErrorMessage("Error. Input invoiceNo=\"asd\".");
         errorList.add(error);
 
-        mvc.perform(MockMvcRequestBuilders.get("http://vhost.tora.com:8081/api/invoice/{id}", id))
-        .andExpect(status().is4xxClientError())
+        mvc.perform(MockMvcRequestBuilders.get("http://vhost.tora.com:8081/api/invoice/" + id))
+        .andExpect(status().isBadRequest())
         .andExpect(content().json(mapper.writeValueAsString(new ResponseInvoice(errorList, new ArrayList<InvoiceResult>()))));
     }
 
@@ -91,7 +91,7 @@ public class InvoiceApiControllerTest {
     public void testGet__Error() throws Exception {
 
         mvc.perform(MockMvcRequestBuilders.get("http://vhost.tora.com:8081/api/invo"))
-        .andExpect(status().is5xxServerError());
+        .andExpect(status().isInternalServerError());
     }
 
 }

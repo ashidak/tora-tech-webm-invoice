@@ -115,30 +115,6 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>${checkstyle.plugin.version}</version>
-				<dependencies>
-					<dependency>
-						<groupId>com.puppycrawl.tools</groupId>
-						<artifactId>checkstyle</artifactId>
-						<version>${checkstyle.version}</version>
-					</dependency>
-					<dependency>
-						<groupId>com.github.sevntu-checkstyle</groupId>
-						<artifactId>sevntu-checkstyle-maven-plugin</artifactId>
-						<version>${sevntu.checkstyle.plugin.version}</version>
-					</dependency>
-				</dependencies>
-				<!-- Specifying configuration here will take effect on the execution
-					of "mvn checkstyle:checkstyle", but will not take effect on the execution
-					of "mvn site" -->
-				<configuration>
-					<configLocation>checkstyle.xml</configLocation>
-					<failOnViolation>false</failOnViolation>
-				</configuration>
-			</plugin>
-			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>cobertura-maven-plugin</artifactId>
 				<configuration>

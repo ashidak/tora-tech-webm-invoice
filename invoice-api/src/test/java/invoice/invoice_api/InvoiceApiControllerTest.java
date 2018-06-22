@@ -1,4 +1,4 @@
-package invoice.invoice_api.controller;
+package invoice.invoice_api;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -7,7 +7,10 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -18,6 +21,8 @@ import invoice.invoice_api.model.response.entity.InvoiceError;
 import invoice.invoice_api.model.response.entity.InvoiceResult;
 import invoice.invoice_api.model.response.entity.ResponseInvoice;
 
+@RunWith(SpringRunner.class)
+@WebMvcTest(InvoiceApiApplication.class)
 public class InvoiceApiControllerTest {
 
     @Autowired
@@ -27,8 +32,9 @@ public class InvoiceApiControllerTest {
 
     @Before
     public void before() throws Exception {
-        mvc = MockMvcBuilders.standaloneSetup(new InvoiceApiController()).build();
+        mvc = MockMvcBuilders.standaloneSetup(new InvoiceApiApplication()).build();
     }
+
 
     @Test
     public void testGet__Ok() throws Exception {

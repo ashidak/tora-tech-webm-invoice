@@ -1,6 +1,6 @@
 $(function() {
     
-    const requestUrl = "http://localhost:8080/api/invoice/";
+    const requestUrl = "http://vhost.tora.com:8081/api/invoice/";
     
     $("#invoice_view > tbody").empty();
     

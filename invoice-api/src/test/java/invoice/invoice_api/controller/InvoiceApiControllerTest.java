@@ -1,6 +1,5 @@
 package invoice.invoice_api.controller;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.util.ArrayList;
@@ -8,11 +7,9 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,8 +18,6 @@ import invoice.invoice_api.model.response.entity.InvoiceError;
 import invoice.invoice_api.model.response.entity.InvoiceResult;
 import invoice.invoice_api.model.response.entity.ResponseInvoice;
 
-@RunWith(SpringRunner.class)
-@WebMvcTest(InvoiceApiController.class)
 public class InvoiceApiControllerTest {
 
     @Autowired
@@ -63,7 +58,7 @@ public class InvoiceApiControllerTest {
 
         resultList.add(result);
 
-        mvc.perform(get("/api/invoice/{id}", id))
+        mvc.perform(MockMvcRequestBuilders.get("/api/invoice/{id}", id))
         .andExpect(status().isOk())
         .andExpect(content().json(mapper.writeValueAsString(new ResponseInvoice(new ArrayList<InvoiceError>(), resultList))));
     }
@@ -81,7 +76,8 @@ public class InvoiceApiControllerTest {
         error.setErrorMessage("Error. Input invoiceNo=\"asd\".");
         errorList.add(error);
 
-        mvc.perform(get("/api/invoice/{id}", id))
+        mvc.perform(MockMvcRequestBuilders
+                .get("/api/invoice/{id}", id))
         .andExpect(status().is4xxClientError())
         .andExpect(content().json(mapper.writeValueAsString(new ResponseInvoice(errorList, new ArrayList<InvoiceResult>()))));
     }
@@ -89,7 +85,7 @@ public class InvoiceApiControllerTest {
     @Test
     public void testGet__Error() throws Exception {
 
-        mvc.perform(get("/api/invo"))
+        mvc.perform(MockMvcRequestBuilders.get("/api/invo"))
         .andExpect(status().is5xxServerError());
     }
 

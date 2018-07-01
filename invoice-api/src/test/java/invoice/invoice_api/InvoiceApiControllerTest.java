@@ -187,7 +187,6 @@ public class InvoiceApiControllerTest {
 
         RequestPostInvoice postInvoice = new RequestPostInvoice();
         postInvoice.setClientNo("20001");
-        //postInvoice.setCreateUser("");
         postInvoice.setInvoiceStartDate("2018-01-01");
         postInvoice.setInvoiceEndDate("2018-01-31");
 
@@ -198,4 +197,24 @@ public class InvoiceApiControllerTest {
 
     }
 
+    /**
+     * Test post N G add invoice 01.
+     *
+     * @throws Exception the exception
+     */
+    @Test
+    public void testPost_NG_AddInvoice_02() throws Exception {
+
+        RequestPostInvoice postInvoice = new RequestPostInvoice();
+        postInvoice.setClientNo("20001");
+        postInvoice.setCreateUser("ashidak");
+        postInvoice.setInvoiceStartDate("2018-01-31");
+        postInvoice.setInvoiceEndDate("2018-01-01");
+
+        mvc.perform(MockMvcRequestBuilders.post("/api/invoice/")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(postInvoice)))
+        .andExpect(MockMvcResultMatchers.status().isBadRequest());
+
+    }
 }

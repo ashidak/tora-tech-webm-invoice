@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import invoice.invoice_api.model.exception.DateException;
 import invoice.invoice_api.model.exception.InvoiceNoException;
 import invoice.invoice_api.model.exception.RequestEntityValidatedException;
-import invoice.invoice_api.model.exception.DateException;
 import invoice.invoice_api.model.request.dao.RegisterInvoice;
 import invoice.invoice_api.model.request.entity.RequestPostInvoice;
 import invoice.invoice_api.model.response.dao.SearchInvoice;
@@ -113,7 +113,7 @@ public class InvoiceApiController {
             Date sDate = dateFormat.parse(startDate);
             Date eDate = dateFormat.parse(endDate);
 
-            if ( sDate.before(eDate)) {
+            if ( sDate.after(eDate)) {
                 throw new DateException(startDate, endDate);
             }
         } catch ( ParseException e ) {

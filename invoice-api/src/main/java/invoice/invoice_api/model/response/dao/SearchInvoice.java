@@ -32,7 +32,7 @@ public class SearchInvoice {
             "    c.client_address," +
             "    c.client_tel," +
             "    c.client_fax," +
-            "    CONCAT(c.client_charge_last_name, c.client_charge_first_name)," +
+            "    CONCAT(c.client_charge_last_name, c.client_charge_first_name) as clientChargeName," +
             "    i.invoice_status," +
             "    i.invoice_create_date," +
             "    i.invoice_title," +

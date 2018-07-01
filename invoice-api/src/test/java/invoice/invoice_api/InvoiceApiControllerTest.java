@@ -71,8 +71,8 @@ public class InvoiceApiControllerTest {
      */
     @Before
     public void before() throws Exception {
-	mvc = MockMvcBuilders.standaloneSetup(controller).setHandlerExceptionResolvers(handlerExceptionResolver)
-		.build();
+        mvc = MockMvcBuilders.standaloneSetup(controller).setHandlerExceptionResolvers(handlerExceptionResolver)
+                .build();
     }
 
     /**
@@ -84,34 +84,18 @@ public class InvoiceApiControllerTest {
     @Test
     public void testGet_Ok_SearchAllInvoice() throws Exception {
 
-	InvoiceResult result = new InvoiceResult();
+        InvoiceResult result = new InvoiceResult(
+                "26", "クライアント名", "顧客住所", "03-1234-5678", "03-1234-5678", "", "20", "2018-01-13", "title",
+                "100", "8", "2018-01-13", "2018-01-13", "note", "createUser", "2018-01-05 19:25:31.0", "updateUser", "2018-01-13 01:35:19.0");
 
-	result.setInvoiceNo("26");
-	result.setClientName("クライアント名");
-	result.setClientAddress("顧客住所");
-	result.setClientTel("03-1234-5678");
-	result.setClientFax("03-1234-5678");
-	result.setInvoiceStatus("20");
-	result.setInvoiceCreateDate("2018-01-13");
-	result.setInvoiceTitle("title");
-	result.setInvoiceAmt("100");
-	result.setTaxAmt("8");
-	result.setInvoiceStartDate("2018-01-13");
-	result.setInvoiceEndDate("2018-01-13");
-	result.setInvoiceNote("note");
-	result.setCreateUser("createUser");
-	result.setCreateDatetime("2018-01-05 19:25:31.0");
-	result.setUpdateUser("updateUser");
-	result.setUpdateDatetime("2018-01-13 01:35:19.0");
+        List<InvoiceResult> resultList = new ArrayList<InvoiceResult>();
+        resultList.add(result);
 
-	List<InvoiceResult> resultList = new ArrayList<InvoiceResult>();
-	resultList.add(result);
+        when(search.searchAllInvoice()).thenReturn(resultList);
 
-	when(search.searchAllInvoice()).thenReturn(resultList);
-
-	mvc.perform(MockMvcRequestBuilders.get("/api/invoice/")).andExpect(MockMvcResultMatchers.status().isOk())
-	.andExpect(content().json(
-		mapper.writeValueAsString(new ResponseInvoice(new ArrayList<InvoiceError>(), resultList))));
+        mvc.perform(MockMvcRequestBuilders.get("/api/invoice/")).andExpect(MockMvcResultMatchers.status().isOk())
+        .andExpect(content().json(
+                mapper.writeValueAsString(new ResponseInvoice(new ArrayList<InvoiceError>(), resultList))));
 
     }
 
@@ -124,34 +108,34 @@ public class InvoiceApiControllerTest {
     @Test
     public void testGet_Ok_SearchInvoice() throws Exception {
 
-	List<InvoiceResult> resultList = new ArrayList<InvoiceResult>();
-	InvoiceResult result = new InvoiceResult();
+        InvoiceResult result = new InvoiceResult();
 
-	result.setInvoiceNo("26");
-	result.setClientName("クライアント名");
-	result.setClientAddress("顧客住所");
-	result.setClientTel("03-1234-5678");
-	result.setClientFax("03-1234-5678");
-	result.setInvoiceStatus("20");
-	result.setInvoiceCreateDate("2018-01-13");
-	result.setInvoiceTitle("title");
-	result.setInvoiceAmt("100");
-	result.setTaxAmt("8");
-	result.setInvoiceStartDate("2018-01-13");
-	result.setInvoiceEndDate("2018-01-13");
-	result.setInvoiceNote("note");
-	result.setCreateUser("createUser");
-	result.setCreateDatetime("2018-01-05 19:25:31.0");
-	result.setUpdateUser("updateUser");
-	result.setUpdateDatetime("2018-01-13 01:35:19.0");
+        result.setInvoiceNo("26");
+        result.setClientName("クライアント名");
+        result.setClientAddress("顧客住所");
+        result.setClientTel("03-1234-5678");
+        result.setClientFax("03-1234-5678");
+        result.setInvoiceStatus("20");
+        result.setInvoiceCreateDate("2018-01-13");
+        result.setInvoiceTitle("title");
+        result.setInvoiceAmt("100");
+        result.setTaxAmt("8");
+        result.setInvoiceStartDate("2018-01-13");
+        result.setInvoiceEndDate("2018-01-13");
+        result.setInvoiceNote("note");
+        result.setCreateUser("createUser");
+        result.setCreateDatetime("2018-01-05 19:25:31.0");
+        result.setUpdateUser("updateUser");
+        result.setUpdateDatetime("2018-01-13 01:35:19.0");
 
-	resultList.add(result);
+        List<InvoiceResult> resultList = new ArrayList<InvoiceResult>();
+        resultList.add(result);
 
-	when(search.searchInvoice("26")).thenReturn(resultList);
+        when(search.searchInvoice("26")).thenReturn(resultList);
 
-	mvc.perform(MockMvcRequestBuilders.get("/api/invoice/26")).andExpect(MockMvcResultMatchers.status().isOk())
-	.andExpect(content().json(
-		mapper.writeValueAsString(new ResponseInvoice(new ArrayList<InvoiceError>(), resultList))));
+        mvc.perform(MockMvcRequestBuilders.get("/api/invoice/26")).andExpect(MockMvcResultMatchers.status().isOk())
+        .andExpect(content().json(
+                mapper.writeValueAsString(new ResponseInvoice(new ArrayList<InvoiceError>(), resultList))));
 
     }
 
@@ -164,17 +148,17 @@ public class InvoiceApiControllerTest {
     @Test
     public void testGet_NG_SearchInvoice() throws Exception {
 
-	List<InvoiceError> errorList = new ArrayList<InvoiceError>();
-	InvoiceError error = new InvoiceError();
+        List<InvoiceError> errorList = new ArrayList<InvoiceError>();
+        InvoiceError error = new InvoiceError();
 
-	error.setErrorCode("40001");
-	error.setErrorMessage("入力した請求書管理番号が不正です。");
-	error.setErrorDetail("Error. Input invoiceNo=\"asd\".");
-	errorList.add(error);
+        error.setErrorCode("40001");
+        error.setErrorMessage("入力した請求書管理番号が不正です。");
+        error.setErrorDetail("Error. Input invoiceNo=\"asd\".");
+        errorList.add(error);
 
-	mvc.perform(MockMvcRequestBuilders.get("/api/invoice/asd")).andExpect(status().isBadRequest())
-	.andExpect(content().json(
-		mapper.writeValueAsString(new ResponseInvoice(errorList, new ArrayList<InvoiceResult>()))));
+        mvc.perform(MockMvcRequestBuilders.get("/api/invoice/asd")).andExpect(status().isBadRequest())
+        .andExpect(content().json(
+                mapper.writeValueAsString(new ResponseInvoice(errorList, new ArrayList<InvoiceResult>()))));
     }
 
     /**
@@ -186,7 +170,7 @@ public class InvoiceApiControllerTest {
     @Test
     public void testGet_Error_SearchInvoice() throws Exception {
 
-	mvc.perform(MockMvcRequestBuilders.get("")).andExpect(status().isNotFound());
+        mvc.perform(MockMvcRequestBuilders.get("")).andExpect(status().isNotFound());
     }
 
 }

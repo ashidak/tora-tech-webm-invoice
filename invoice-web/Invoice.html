@@ -4,15 +4,18 @@
     <meta charset="UTF-8">
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
     <script type="text/javascript" src="Invoice.js"></script>
+    <link rel="stylesheet" type="text/css" href="Invoice.css">
     <title>請求書API-ホーム</title>
 </head>
 <body>
-    <h1>請求書一覧</h1>
-    <p>
-        <input type="text" id="invoice" size="8" maxlength="6">
+    <h1 class="title">請求書一覧</h1>
+    <p class="search">
+        </br>
+        <input type="text" id="invoice" size="12" maxlength="6">
         <button id="invoiceSearchBtn">検索</button>
+        </br></br>
     </p>
-    <table id="invoice_view" border="1">
+    <table id="invoice_view" class="bordered">
         <thead>
             <tr>
                 <th>請求書管理番号</th>
@@ -23,32 +26,25 @@
                 <th>請求書作成日</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="invoiceTable">
         </tbody>
     </table>
     <p>
-    <form id="registration_form">
-        <div>
-            <label for="clientNo">顧客管理番号　　:</label>
-            <input type="text" name="clientNo" />
-        </div>
-        <div>
-            <label for="invoiceStartDate">請求期間開始日　:</label>
-            <input type="text" name="invoiceStartDate" />
-        </div>
-        <div>
-            <label for="invoiceEndDate">請求期間終了日　:</label>
-            <input type="text" name="invoiceEndDate" />
-        </div>
-        <div>
-            <label for="createUser">登録ユーザ名　　:</label>
-            <input type="text" name="createUser" />
-        </div>
-        <div>
-            <button id="invoiceAppendBtn" type="button">登録</button>
-        </div>
-    </form>
+        <hr width="90%">
     </p>
-
+    <h1 class="title">請求書登録</h1>
+    <p>
+        <form id="registration_form" class="registerForm">
+                <label for="clientNo">　顧客管理番号　　:</label>
+                <input type="text" name="clientNo" />
+                <label for="invoiceStartDate">　請求期間開始日　:</label>
+                <input type="text" name="invoiceStartDate" />
+                <label for="invoiceEndDate">　請求期間終了日　:</label>
+                <input type="text" name="invoiceEndDate" />
+                <label for="createUser">　登録ユーザ名　　:</label>
+                <input type="text" name="createUser" />
+                <button id="invoiceAppendBtn" type="button">登録</button>
+        </form>
+    </p>
 </body>
 </html>

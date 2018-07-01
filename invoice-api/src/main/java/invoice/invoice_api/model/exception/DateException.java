@@ -29,7 +29,7 @@ import lombok.ToString;
  * @return the end date
  */
 @Getter
-public class dateException extends RuntimeException {
+public class DateException extends RuntimeException {
 
     /** The start date. */
     private String startDate;

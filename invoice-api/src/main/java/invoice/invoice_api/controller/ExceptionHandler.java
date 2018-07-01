@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import invoice.invoice_api.model.exception.InvoiceNoException;
 import invoice.invoice_api.model.exception.RequestEntityValidatedException;
-import invoice.invoice_api.model.exception.dateException;
+import invoice.invoice_api.model.exception.DateException;
 import invoice.invoice_api.model.response.entity.InvoiceError;
 import invoice.invoice_api.model.response.entity.InvoiceResult;
 import invoice.invoice_api.model.response.entity.ResponseInvoice;
@@ -79,8 +79,8 @@ public class ExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @org.springframework.web.bind.annotation.ExceptionHandler(dateException.class)
-    public ResponseInvoice dateExceptionHandler(dateException e) {
+    @org.springframework.web.bind.annotation.ExceptionHandler(DateException.class)
+    public ResponseInvoice dateExceptionHandler(DateException e) {
 
         responseStatusList.clear();
 

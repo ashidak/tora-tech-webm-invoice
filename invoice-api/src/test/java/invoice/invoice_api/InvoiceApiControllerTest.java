@@ -85,7 +85,7 @@ public class InvoiceApiControllerTest {
     public void testGet_Ok_SearchAllInvoice() throws Exception {
 
         InvoiceResult result = new InvoiceResult(
-                "26", "クライアント名", "顧客住所", "03-1234-5678", "03-1234-5678", "", "20", "2018-01-13", "title",
+                "26", "クライアント名", "顧客住所", "03-1234-5678", "03-1234-5678", "顧客名字顧客名前", "20", "2018-01-13", "title",
                 "100", "8", "2018-01-13", "2018-01-13", "note", "createUser", "2018-01-05 19:25:31.0", "updateUser", "2018-01-13 01:35:19.0");
 
         List<InvoiceResult> resultList = new ArrayList<InvoiceResult>();
@@ -115,6 +115,7 @@ public class InvoiceApiControllerTest {
         result.setClientAddress("顧客住所");
         result.setClientTel("03-1234-5678");
         result.setClientFax("03-1234-5678");
+        result.setClientChargeName("顧客名字顧客名前");
         result.setInvoiceStatus("20");
         result.setInvoiceCreateDate("2018-01-13");
         result.setInvoiceTitle("title");

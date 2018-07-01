@@ -16,6 +16,7 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -27,6 +28,8 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import invoice.invoice_api.controller.InvoiceApiController;
+import invoice.invoice_api.model.request.dao.RegisterInvoice;
+import invoice.invoice_api.model.request.entity.RequestPostInvoice;
 import invoice.invoice_api.model.response.dao.SearchInvoice;
 import invoice.invoice_api.model.response.entity.InvoiceError;
 import invoice.invoice_api.model.response.entity.InvoiceResult;
@@ -52,6 +55,10 @@ public class InvoiceApiControllerTest {
     @Mock
     private SearchInvoice search;
 
+    /** The register. */
+    @Mock
+    private RegisterInvoice register;
+
     /** The mapper. */
     @Autowired
     private ObjectMapper mapper;
@@ -66,8 +73,7 @@ public class InvoiceApiControllerTest {
     /**
      * Before.
      *
-     * @throws Exception
-     *             the exception
+     * @throws Exception the exception
      */
     @Before
     public void before() throws Exception {
@@ -76,17 +82,17 @@ public class InvoiceApiControllerTest {
     }
 
     /**
-     * Test get ok search all invoice.
+     * Test get ok find all invoice.
      *
-     * @throws Exception
-     *             the exception
+     * @throws Exception the exception
      */
     @Test
-    public void testGet_Ok_SearchAllInvoice() throws Exception {
+    public void testGet_Ok_FindAllInvoice() throws Exception {
 
         InvoiceResult result = new InvoiceResult(
                 "26", "クライアント名", "顧客住所", "03-1234-5678", "03-1234-5678", "顧客名字顧客名前", "20", "2018-01-13", "title",
-                "100", "8", "2018-01-13", "2018-01-13", "note", "createUser", "2018-01-05 19:25:31.0", "updateUser", "2018-01-13 01:35:19.0");
+                "100", "8", "2018-01-13", "2018-01-13", "note", "createUser", "2018-01-05 19:25:31.0", "updateUser",
+                "2018-01-13 01:35:19.0");
 
         List<InvoiceResult> resultList = new ArrayList<InvoiceResult>();
         resultList.add(result);
@@ -100,13 +106,12 @@ public class InvoiceApiControllerTest {
     }
 
     /**
-     * Test get ok search invoice.
+     * Test get ok find invoice.
      *
-     * @throws Exception
-     *             the exception
+     * @throws Exception the exception
      */
     @Test
-    public void testGet_Ok_SearchInvoice() throws Exception {
+    public void testGet_Ok_FindInvoice() throws Exception {
 
         InvoiceResult result = new InvoiceResult();
 
@@ -141,13 +146,12 @@ public class InvoiceApiControllerTest {
     }
 
     /**
-     * Test get N G search invoice.
+     * Test get N G find invoice.
      *
-     * @throws Exception
-     *             the exception
+     * @throws Exception the exception
      */
     @Test
-    public void testGet_NG_SearchInvoice() throws Exception {
+    public void testGet_NG_FindInvoice() throws Exception {
 
         List<InvoiceError> errorList = new ArrayList<InvoiceError>();
         InvoiceError error = new InvoiceError();
@@ -163,15 +167,35 @@ public class InvoiceApiControllerTest {
     }
 
     /**
-     * Test get error search invoice.
+     * Test get error find invoice.
      *
-     * @throws Exception
-     *             the exception
+     * @throws Exception the exception
      */
     @Test
-    public void testGet_Error_SearchInvoice() throws Exception {
+    public void testGet_Error_FindInvoice() throws Exception {
 
         mvc.perform(MockMvcRequestBuilders.get("")).andExpect(status().isNotFound());
+    }
+
+    /**
+     * Test post N G add invoice 01.
+     *
+     * @throws Exception the exception
+     */
+    @Test
+    public void testPost_NG_AddInvoice_01() throws Exception {
+
+        RequestPostInvoice postInvoice = new RequestPostInvoice();
+        postInvoice.setClientNo("20001");
+        //postInvoice.setCreateUser("");
+        postInvoice.setInvoiceStartDate("2018-01-01");
+        postInvoice.setInvoiceEndDate("2018-01-31");
+
+        mvc.perform(MockMvcRequestBuilders.post("/api/invoice/")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(postInvoice)))
+        .andExpect(MockMvcResultMatchers.status().isBadRequest());
+
     }
 
 }
